@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import Goruntule from './Goruntule';
+import Goruntule from "./Goruntule";
 
 const formData = {
   ad: "",
   soyad: "",
   email: "",
-  mesaj: ""
+  mesaj: "",
 };
 
 const errorData = {
   ad: "",
   soyad: "",
   email: "",
-  mesaj: ""
+  mesaj: "",
 };
 
 const IletisimFormu = () => {
@@ -34,20 +34,22 @@ const IletisimFormu = () => {
     return "";
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const submitErrors = {};
-    Object.keys(errors).forEach(field => {
+    Object.keys(errors).forEach((field) => {
       submitErrors[field] = errorHandling(field, form[field]);
     });
 
     setErrors(submitErrors);
 
-    const hasErrors = (submitErrors.ad === "" && submitErrors.soyad === "" && submitErrors.email === "" && submitErrors.mesaj === "");
+    const hasErrors =
+      submitErrors.ad === "" &&
+      submitErrors.soyad === "" &&
+      submitErrors.email === "" &&
+      submitErrors.mesaj === "";
     setDisplayData(hasErrors);
-
   };
 
   const handleChange = (e) => {
@@ -59,53 +61,56 @@ const IletisimFormu = () => {
 
     setErrors({
       ...errors,
-      [e.target.name]: errorMessage
+      [e.target.name]: errorMessage,
     });
 
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
     <div className="App">
-      <h1>İletişim Formu</h1>
+      <h1 data-testid="header">İletişim Formu</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="ad">Ad*</label>
+          <label htmlFor="ad">Ad</label>
           <input
             onChange={handleChange}
             name="ad"
             value={form.ad}
             id="ad"
-            placeholder="İlhan"
+            placeholder=""
+            data-testid="name"
           />
-          {(errors.ad) && <p data-testid="error">Hata: {errors.ad}</p>}
+          {errors.ad && <p data-testid="error">Hata: {errors.ad}</p>}
         </div>
 
         <div>
-          <label htmlFor="soyad">Soyad*</label>
+          <label htmlFor="soyad">Soyad</label>
           <input
             onChange={handleChange}
             id="soyad"
             name="soyad"
             value={form.soyad}
-            placeholder="Mansız"
+            placeholder=""
+            data-testid="surname"
           />
-          {(errors.soyad) && <p data-testid="error">Hata: {errors.soyad}</p>}
+          {errors.soyad && <p data-testid="error">Hata: {errors.soyad}</p>}
         </div>
 
         <div>
-          <label htmlFor="email">Email*</label>
+          <label htmlFor="email">Email</label>
           <input
             onChange={handleChange}
             id="email"
             name="email"
             value={form.email}
-            placeholder="yüzyılıngolcüsü@hotmail.com"
+            placeholder=""
+            data-testid="emailDegeri"
           />
-          {(errors.email) && <p data-testid="error">Hata: {errors.email}</p>}
+          {errors.email && <p data-testid="error">Hata: {errors.email}</p>}
         </div>
 
         <div>
@@ -116,12 +121,12 @@ const IletisimFormu = () => {
             id="mesaj"
             value={form.mesaj}
           />
-          {(errors.mesaj) && <p data-testid="error">Error: {errors.mesaj}</p>}
+          {errors.mesaj && <p data-testid="error">Error: {errors.mesaj}</p>}
         </div>
 
-        {displayData && <Goruntule form={form}/>}
+        {displayData && <Goruntule form={form} />}
 
-        <button>Gönder</button>
+        <button data-testid="button">Gönder</button>
       </form>
     </div>
   );
